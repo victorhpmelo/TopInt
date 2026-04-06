@@ -1,0 +1,32 @@
+<div class="panel">
+  <h2>Backup e restauração</h2>
+  <p class="hint">
+    O backup usa <code>pg_dump</code> e a restauração usa <code>psql</code>. Instale as ferramentas cliente do PostgreSQL na VM e
+    ajuste o PATH. Em produção, prefira HTTPS e restrinja este painel a administradores.
+  </p>
+
+  <div class="row">
+    <button mat-flat-button color="primary" type="button" (click)="runBackup()" [disabled]="busy">
+      Backup manual agora
+    </button>
+    <label class="file">
+      <span>Restaurar de arquivo .sql</span>
+      <input type="file" accept=".sql,.SQL" (change)="onFileSelected($event)" [disabled]="busy" />
+    </label>
+  </div>
+
+  @if (message) {
+    <div class="msg">{{ message }}</div>
+  }
+
+  <h3>Arquivos no servidor</h3>
+  @if (backups.length === 0) {
+    <div class="muted">Nenhum backup encontrado no diretório configurado.</div>
+  } @else {
+    <mat-list>
+      @for (b of backups; track b) {
+        <mat-list-item>{{ b }}</mat-list-item>
+      }
+    </mat-list>
+  }
+</div>

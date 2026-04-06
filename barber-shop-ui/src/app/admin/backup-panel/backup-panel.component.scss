@@ -1,0 +1,33 @@
+.panel {
+  padding: 1rem;
+  max-width: 900px;
+}
+
+.hint {
+  opacity: 0.85;
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.file {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.msg {
+  margin: 0.75rem 0;
+  white-space: pre-wrap;
+}
+
+.muted {
+  opacity: 0.75;
+}

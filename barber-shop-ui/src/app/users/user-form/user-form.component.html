@@ -1,0 +1,44 @@
+<div class="form-wrap">
+  <h2>{{ isCreate ? 'Novo usuário' : 'Editar usuário' }}</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Usuário</mat-label>
+      <input matInput formControlName="username" autocomplete="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Nome completo</mat-label>
+      <input matInput formControlName="fullName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Perfil</mat-label>
+      <mat-select formControlName="role">
+        @for (r of roles; track r) {
+          <mat-option [value]="r">{{ r }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (isCreate) {
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Senha inicial</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="new-password" />
+      </mat-form-field>
+    } @else {
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Nova senha (opcional)</mat-label>
+        <input matInput type="password" formControlName="newPassword" autocomplete="new-password" />
+      </mat-form-field>
+    }
+
+    @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
+    }
+
+    <div class="actions">
+      <button mat-stroked-button type="button" routerLink="/users">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="submitting">Salvar</button>
+    </div>
+  </form>
+</div>
