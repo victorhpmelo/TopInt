@@ -25,11 +25,11 @@ public class BarberShopExceptionHandler extends ResponseEntityExceptionHandler {
             final WebRequest request
     ) {
         final var status = ex.getStatusCode();
-        final var response = ProblemResponse.builder()
-                .status(status.value())
-                .timestamp(OffsetDateTime.now())
-                .message(ex.getReason())
-                .build();
+        final var response = new ProblemResponse(
+                status.value(),
+                OffsetDateTime.now(),
+                ex.getReason()
+        );
         return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
@@ -39,11 +39,11 @@ public class BarberShopExceptionHandler extends ResponseEntityExceptionHandler {
             final WebRequest request
     ) {
         final var status = BAD_REQUEST;
-        final var response = ProblemResponse.builder()
-                .status(status.value())
-                .timestamp(OffsetDateTime.now())
-                .message(ex.getMessage())
-                .build();
+        final var response = new ProblemResponse(
+                status.value(),
+                OffsetDateTime.now(),
+                ex.getMessage()
+        );
         return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
@@ -51,11 +51,11 @@ public class BarberShopExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUncaught(final Exception ex, final WebRequest request){
         log.error("handleUncaught: ", ex);
         var status = INTERNAL_SERVER_ERROR;
-        var response = ProblemResponse.builder()
-                .status(status.value())
-                .timestamp(OffsetDateTime.now())
-                .message(ex.getMessage())
-                .build();
+        var response = new ProblemResponse(
+                status.value(),
+                OffsetDateTime.now(),
+                ex.getMessage()
+        );
         return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 

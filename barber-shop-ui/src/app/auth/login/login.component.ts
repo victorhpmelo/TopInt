@@ -22,8 +22,14 @@ import { MatCardModule } from '@angular/material/card';
 export class LoginComponent {
 
   readonly form = new FormGroup({
-    username: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-    password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
+    username: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)]
+    }),
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(6), Validators.maxLength(255)]
+    })
   });
 
   errorMessage = '';
@@ -34,6 +40,14 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly route: ActivatedRoute
   ) { }
+
+  get usernameCtrl(): FormControl<string> {
+    return this.form.controls.username;
+  }
+
+  get passwordCtrl(): FormControl<string> {
+    return this.form.controls.password;
+  }
 
   submit(): void {
     this.errorMessage = '';

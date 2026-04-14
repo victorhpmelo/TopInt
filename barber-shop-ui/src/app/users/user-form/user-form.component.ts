@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsersService } from '../../services/api-client/users/users.service';
 import { AppUserRole } from '../../services/api-client/users/users.models';
@@ -24,13 +24,26 @@ import { MatSelectModule } from '@angular/material/select';
 export class UserFormComponent implements OnInit {
 
   readonly roles: AppUserRole[] = ['ADMIN', 'STAFF'];
+  private readonly passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{10,}$/;
 
   readonly form = new FormGroup({
-    username: new FormControl<string>({ value: '', disabled: true }, { nonNullable: true }),
-    fullName: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    username: new FormControl<string>({ value: '', disabled: true }, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/^\S+$/)]
+    }),
+    fullName: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(255)]
+    }),
     role: new FormControl<AppUserRole>('STAFF', { nonNullable: true, validators: [Validators.required] }),
-    password: new FormControl<string>('', { nonNullable: true }),
-    newPassword: new FormControl<string>('', { nonNullable: true })
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [this.passwordPolicyValidator(false)]
+    }),
+    newPassword: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [this.passwordPolicyValidator(true)]
+    })
   });
 
   isCreate = true;
@@ -44,12 +57,28 @@ export class UserFormComponent implements OnInit {
     private readonly usersService: UsersService
   ) { }
 
+  get usernameCtrl(): FormControl<string> {
+    return this.form.controls.username;
+  }
+
+  get fullNameCtrl(): FormControl<string> {
+    return this.form.controls.fullName;
+  }
+
+  get passwordCtrl(): FormControl<string> {
+    return this.form.controls.password;
+  }
+
+  get newPasswordCtrl(): FormControl<string> {
+    return this.form.controls.newPassword;
+  }
+
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (!idParam) {
       this.isCreate = true;
       this.form.controls.username.enable();
-      this.form.controls.password.setValidators([Validators.required]);
+      this.form.controls.password.setValidators([Validators.required, this.passwordPolicyValidator(false)]);
       this.form.controls.password.updateValueAndValidity();
       return;
     }
@@ -111,5 +140,17 @@ export class UserFormComponent implements OnInit {
     const anyErr = err as { error?: { message?: string } };
     const msg = anyErr?.error?.message ?? 'Falha ao salvar.';
     this.errorMessage = typeof msg === 'string' ? msg : 'Falha ao salvar.';
+  }
+
+  private passwordPolicyValidator(optional: boolean): ValidatorFn {
+    return (control: AbstractControl<string>) => {
+      const value = control.value ?? '';
+      if (!value.trim()) {
+        return optional ? null : { required: true };
+      }
+      return this.passwordPolicy.test(value)
+        ? null
+        : { passwordPolicy: true };
+    };
   }
 }

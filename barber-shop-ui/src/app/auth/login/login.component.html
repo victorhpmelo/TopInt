@@ -7,15 +7,27 @@
         <mat-form-field appearance="outline" class="full">
           <mat-label>Usuário</mat-label>
           <input matInput formControlName="username" autocomplete="username" />
+          @if (usernameCtrl.hasError('required') && usernameCtrl.touched) {
+            <mat-error>Informe o usuário.</mat-error>
+          }
+          @if (usernameCtrl.hasError('minlength') && usernameCtrl.touched) {
+            <mat-error>O usuário deve ter pelo menos 3 caracteres.</mat-error>
+          }
         </mat-form-field>
         <mat-form-field appearance="outline" class="full">
           <mat-label>Senha</mat-label>
           <input matInput type="password" formControlName="password" autocomplete="current-password" />
+          @if (passwordCtrl.hasError('required') && passwordCtrl.touched) {
+            <mat-error>Informe a senha.</mat-error>
+          }
+          @if (passwordCtrl.hasError('minlength') && passwordCtrl.touched) {
+            <mat-error>A senha deve ter pelo menos 6 caracteres.</mat-error>
+          }
         </mat-form-field>
         @if (errorMessage) {
           <div class="error">{{ errorMessage }}</div>
         }
-        <button mat-flat-button color="primary" type="submit" [disabled]="submitting">
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting || form.invalid">
           Entrar
         </button>
       </form>

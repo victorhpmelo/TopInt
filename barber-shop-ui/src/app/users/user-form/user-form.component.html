@@ -4,11 +4,26 @@
     <mat-form-field appearance="outline" class="full">
       <mat-label>Usuário</mat-label>
       <input matInput formControlName="username" autocomplete="username" />
+      @if (usernameCtrl.hasError('required') && usernameCtrl.touched) {
+        <mat-error>Usuário é obrigatório.</mat-error>
+      }
+      @if (usernameCtrl.hasError('minlength') && usernameCtrl.touched) {
+        <mat-error>Usuário deve ter no mínimo 3 caracteres.</mat-error>
+      }
+      @if (usernameCtrl.hasError('pattern') && usernameCtrl.touched) {
+        <mat-error>Usuário não pode conter espaços.</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full">
       <mat-label>Nome completo</mat-label>
       <input matInput formControlName="fullName" />
+      @if (fullNameCtrl.hasError('required') && fullNameCtrl.touched) {
+        <mat-error>Nome completo é obrigatório.</mat-error>
+      }
+      @if (fullNameCtrl.hasError('minlength') && fullNameCtrl.touched) {
+        <mat-error>Nome completo deve ter no mínimo 3 caracteres.</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full">
@@ -24,11 +39,24 @@
       <mat-form-field appearance="outline" class="full">
         <mat-label>Senha inicial</mat-label>
         <input matInput type="password" formControlName="password" autocomplete="new-password" />
+        @if (passwordCtrl.hasError('required') && passwordCtrl.touched) {
+          <mat-error>Senha é obrigatória para cadastro.</mat-error>
+        }
+        @if (passwordCtrl.hasError('passwordPolicy') && passwordCtrl.touched) {
+          <mat-error>
+            A senha deve ter 10+ caracteres com maiúscula, minúscula, número e caractere especial.
+          </mat-error>
+        }
       </mat-form-field>
     } @else {
       <mat-form-field appearance="outline" class="full">
         <mat-label>Nova senha (opcional)</mat-label>
         <input matInput type="password" formControlName="newPassword" autocomplete="new-password" />
+        @if (newPasswordCtrl.hasError('passwordPolicy') && newPasswordCtrl.touched) {
+          <mat-error>
+            A nova senha deve ter 10+ caracteres com maiúscula, minúscula, número e caractere especial.
+          </mat-error>
+        }
       </mat-form-field>
     }
 
@@ -38,7 +66,7 @@
 
     <div class="actions">
       <button mat-stroked-button type="button" routerLink="/users">Cancelar</button>
-      <button mat-flat-button color="primary" type="submit" [disabled]="submitting">Salvar</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="submitting || form.invalid">Salvar</button>
     </div>
   </form>
 </div>

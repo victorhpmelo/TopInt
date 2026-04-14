@@ -8,6 +8,8 @@ services:
       PGUSER: barber-shop-api
       PGPASSWORD: barber-shop-api
       SPRING_PROFILES_ACTIVE: dev
+      APP_BACKUP_PG_DUMP_COMMAND: /usr/lib/postgresql/17/bin/pg_dump
+      APP_BACKUP_PSQL_COMMAND: /usr/lib/postgresql/17/bin/psql
     ports:
       - "8080:8080"
       - "5005:5005"
