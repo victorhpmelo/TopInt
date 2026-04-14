@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<div mat-dialog-content class="dialog-content" [class.success]="data.tone === 'success'" [class.error]="data.tone === 'error'">
+  {{ data.content }}
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>Fechar</button>
+</div>

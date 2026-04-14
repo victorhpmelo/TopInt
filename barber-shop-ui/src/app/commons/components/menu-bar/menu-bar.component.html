@@ -1,6 +1,6 @@
-<div class="menu_container">
-  @if (auth.isLoggedIn()) {
-    <button mat-button [matMenuTriggerFor]="clientMenu">
+@if (auth.isLoggedIn()) {
+  <div class="menu_container">
+    <button mat-button class="nav-btn" [matMenuTriggerFor]="clientMenu">
       <div class="menu_title">Clientes</div>
     </button>
     <mat-menu #clientMenu="matMenu" yPosition="below">
@@ -8,7 +8,7 @@
       <button mat-menu-item (click)="navigateTo('clients/list')">Listagem</button>
     </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="scheduleMenu">
+    <button mat-button class="nav-btn" [matMenuTriggerFor]="scheduleMenu">
       <div class="menu_title">Agendar</div>
     </button>
     <mat-menu #scheduleMenu="matMenu" yPosition="below">
@@ -16,7 +16,7 @@
     </mat-menu>
 
     @if (auth.isAdmin()) {
-      <button mat-button [matMenuTriggerFor]="adminMenu">
+      <button mat-button class="nav-btn" [matMenuTriggerFor]="adminMenu">
         <div class="menu_title">Administração</div>
       </button>
       <mat-menu #adminMenu="matMenu" yPosition="below">
@@ -25,8 +25,6 @@
       </mat-menu>
     }
 
-    <button mat-button type="button" (click)="logout()">Sair</button>
-  } @else {
-    <a mat-button routerLink="/login">Entrar</a>
-  }
-</div>
+    <button mat-button class="nav-btn nav-btn-logout" type="button" (click)="logout()">Sair</button>
+  </div>
+}

@@ -69,34 +69,3 @@
 }
 
 
-::ng-deep .mat-mdc-menu-trigger.mdc-button.mat-mdc-button.mat-unthemed.mat-mdc-button-base {
-  background-color: #6f4e37 ;
-  color: #fed8b1 ; 
-  border-radius: 5px ;
-  width: 200px;
-  height: 50px;
-  padding: 20px; 
-  border: 1px solid #212121;
-  margin: 4px;
-}
-
-::ng-deep .mat-mdc-menu-trigger.mdc-button.mat-mdc-button.mat-unthemed.mat-mdc-button-base:hover {
-  background-color: #fed8b1 !important; 
-  color: #6f4e37 !important;
-}
-
-::ng-deep .mat-mdc-menu-content{
-  background-color: #6f4e37 !important; 
-  color: #fed8b1 !important; 
-  margin: 10px;
-  width: 190px;
-  padding: 2%;
-  border: 1px solid #212121;
-  border-top: none;
-  border-radius: 5px;
-}
-
-::ng-deep .mat-mdc-menu-item:not([disabled]):hover{
-  background-color: #fed8b1 !important; 
-  color: #6f4e37 !important; 
-}

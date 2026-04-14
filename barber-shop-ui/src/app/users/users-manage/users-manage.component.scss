@@ -1,12 +1,36 @@
+.users-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
 .toolbar {
   margin-bottom: 1rem;
+  padding: 1rem;
 }
 
 .full {
   width: 100%;
 }
 
+.table-wrap {
+  padding: 0.25rem;
+}
+
+.card-like {
+  background: #fff8f5;
+  border: 1px solid #d4c3ba;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(60, 45, 36, 0.1);
+}
+
+.action-btn {
+  min-width: 170px;
+  border-radius: 10px;
+  padding: 0.25rem 1rem;
+  font-weight: 600;
+}
+
 .error {
-  color: #b00020;
+  color: #ba1a1a;
   margin-bottom: 0.75rem;
 }

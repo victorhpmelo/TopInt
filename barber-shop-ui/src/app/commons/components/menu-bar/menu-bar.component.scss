@@ -2,7 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.35rem;
   padding-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 ::ng-deep .menu-title{
@@ -12,5 +14,41 @@
   padding: 8px 16px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+}
+
+.nav-btn {
+  background-color: #6f4e37 !important;
+  color: #fed8b1 !important;
+  border-radius: 5px !important;
+  min-width: 170px !important;
+  height: 44px !important;
+  padding: 0 18px !important;
+  border: 1px solid #212121 !important;
+  margin: 4px !important;
+}
+
+.nav-btn:hover {
+  background-color: #fed8b1 !important;
+  color: #6f4e37 !important;
+}
+
+.nav-btn-logout {
+  min-width: 96px !important;
+}
+
+::ng-deep .mat-mdc-menu-content{
+  background-color: #6f4e37 !important;
+  color: #fed8b1 !important;
+  margin: 10px;
+  width: 190px;
+  padding: 2%;
+  border: 1px solid #212121;
+  border-top: none;
+  border-radius: 5px;
+}
+
+::ng-deep .mat-mdc-menu-item:not([disabled]):hover{
+  background-color: #fed8b1 !important;
+  color: #6f4e37 !important;
 }
 

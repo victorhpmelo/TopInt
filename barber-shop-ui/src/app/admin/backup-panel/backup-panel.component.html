@@ -1,32 +1,61 @@
 <div class="panel">
-  <h2>Backup e restauração</h2>
-  <p class="hint">
-    O backup usa <code>pg_dump</code> e a restauração usa <code>psql</code>. Instale as ferramentas cliente do PostgreSQL na VM e
-    ajuste o PATH. Em produção, prefira HTTPS e restrinja este painel a administradores.
-  </p>
+  <header class="panel-header">
+    <h2>Backup e restauracao</h2>
+    <p class="hint">
+      Gerencie backup e restore com confirmacao por modal. Use sempre arquivos SQL validos.
+    </p>
+  </header>
 
-  <div class="row">
-    <button mat-flat-button color="primary" type="button" (click)="runBackup()" [disabled]="busy">
-      Backup manual agora
-    </button>
-    <label class="file">
-      <span>Restaurar de arquivo .sql</span>
-      <input type="file" accept=".sql,.SQL" (change)="onFileSelected($event)" [disabled]="busy" />
-    </label>
-  </div>
+  <section class="block block-actions">
+    <h3>Acoes</h3>
+    <div class="actions-grid">
+      <button mat-flat-button class="app-btn btn-primary" [disabled]="busy" (click)="runBackup()">
+        Backup manual agora
+      </button>
+
+      <button mat-flat-button class="app-btn btn-neutral" [disabled]="busy" (click)="openFilePicker(fileInput)">
+        Selecionar arquivo .sql
+      </button>
+
+      <button mat-flat-button class="app-btn btn-danger" [disabled]="busy || !selectedFile" (click)="runRestore(fileInput)">
+        Restaurar arquivo
+      </button>
+
+      <button mat-flat-button class="app-btn btn-neutral" [disabled]="busy || !selectedFile" (click)="clearSelectedFile(fileInput)">
+        Limpar selecao
+      </button>
+    </div>
+
+    <input
+      #fileInput
+      type="file"
+      accept=".sql,.SQL"
+      (change)="onFileSelected($event)"
+      [disabled]="busy"
+      hidden />
+
+    <div class="selected-file" [class.empty]="!selectedFile">
+      {{ selectedFile ? ('Arquivo pronto para restauracao: ' + selectedFile.name) : 'Nenhum arquivo selecionado.' }}
+    </div>
+  </section>
 
   @if (message) {
-    <div class="msg">{{ message }}</div>
+    <section class="block block-message">
+      <h3>Resultado</h3>
+      <div class="msg">{{ message }}</div>
+    </section>
   }
 
-  <h3>Arquivos no servidor</h3>
-  @if (backups.length === 0) {
-    <div class="muted">Nenhum backup encontrado no diretório configurado.</div>
-  } @else {
-    <mat-list>
-      @for (b of backups; track b) {
-        <mat-list-item>{{ b }}</mat-list-item>
-      }
-    </mat-list>
-  }
+  <section class="block block-list">
+    <h3>Arquivos no servidor</h3>
+    @if (backups.length === 0) {
+      <div class="muted">Nenhum backup encontrado no diretorio configurado.</div>
+    } @else {
+      <mat-list>
+        @for (b of backups; track b) {
+          <mat-list-item>{{ b }}</mat-list-item>
+        }
+      </mat-list>
+    }
+  </section>
 </div>

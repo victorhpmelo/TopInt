@@ -1,12 +1,14 @@
-<div class="toolbar">
-  <a mat-flat-button color="primary" routerLink="/users/new">Novo usuário</a>
-</div>
+<section class="users-wrap">
+  <div class="toolbar card-like">
+    <a mat-flat-button color="primary" class="action-btn" routerLink="/users/new">Novo usuário</a>
+  </div>
 
-@if (loadError) {
-  <div class="error">{{ loadError }}</div>
-}
+  @if (loadError) {
+    <div class="error">{{ loadError }}</div>
+  }
 
-<table mat-table [dataSource]="users" class="mat-elevation-z1 full">
+  <div class="table-wrap card-like">
+    <table mat-table [dataSource]="users" class="mat-elevation-z1 full">
 
   <ng-container matColumnDef="username">
     <th mat-header-cell *matHeaderCellDef>Usuário</th>
@@ -40,6 +42,8 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</section>

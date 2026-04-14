@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Folders ###
+barber-shop-api/backups/
+barber-shop-api/logs/

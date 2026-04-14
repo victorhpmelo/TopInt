@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
@@ -29,7 +28,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuditLogService auditLogService;
 
-    @Transactional
     public LoginResult login(final String username, final String rawPassword) {
         final var userOpt = userRepository.findByUsernameIgnoreCase(username.trim());
         if (userOpt.isEmpty()) {
