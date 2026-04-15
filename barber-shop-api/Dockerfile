@@ -1,15 +1,16 @@
+FROM postgres:17.4 AS pgtools
+
 FROM maven:3.9.9-eclipse-temurin-21
 
 ENV INSTALL_PATH=/barber-shop-api
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates wget gnupg \
-    && install -d /etc/apt/keyrings \
-    && wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(. /etc/os-release && echo $VERSION_CODENAME)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends postgresql-client-17 \
-    && rm -rf /var/lib/apt/lists/*
+# Versao alternativa: evita apt.postgresql.org e usa os binarios do cliente
+# diretamente da imagem oficial do PostgreSQL 17 (mesma major version do banco).
+COPY --from=pgtools /usr/lib/postgresql/17 /usr/lib/postgresql/17
+COPY --from=pgtools /usr/share/postgresql /usr/share/postgresql
+
+RUN ln -sf /usr/lib/postgresql/17/bin/pg_dump /usr/local/bin/pg_dump \
+    && ln -sf /usr/lib/postgresql/17/bin/psql /usr/local/bin/psql
 
 RUN mkdir $INSTALL_PATH
 
